@@ -1,0 +1,568 @@
+{
+"settings": {
+"style": {
+"background-color": "rgb(255, 255, 255)",
+"background_class": ""
+},
+"theme": "redmond",
+"sizex": "390",
+"sizey": "720",
+"gridSize": "",
+"useBackground": false,
+"snapType": null
+},
+"widgets": {
+"e00001": {
+"tpl": "tplschlueter-fbhHelper",
+"data": {
+"g_fixed": false,
+"g_visibility": false,
+"g_css_font_text": false,
+"g_css_background": false,
+"g_css_shadow_padding": false,
+"g_css_border": false,
+"g_gestures": false,
+"g_signals": false,
+"g_last_change": false,
+"visibility-cond": "==",
+"visibility-val": 1,
+"visibility-groups-action": "hide",
+"signals-cond-0": "==",
+"signals-val-0": true,
+"signals-icon-0": "/vis/signals/lowbattery.png",
+"signals-icon-size-0": 0,
+"signals-blink-0": false,
+"signals-horz-0": 0,
+"signals-vert-0": 0,
+"signals-hide-edit-0": false,
+"signals-cond-1": "==",
+"signals-val-1": true,
+"signals-icon-1": "/vis/signals/lowbattery.png",
+"signals-icon-size-1": 0,
+"signals-blink-1": false,
+"signals-horz-1": 0,
+"signals-vert-1": 0,
+"signals-hide-edit-1": false,
+"signals-cond-2": "==",
+"signals-val-2": true,
+"signals-icon-2": "/vis/signals/lowbattery.png",
+"signals-icon-size-2": 0,
+"signals-blink-2": false,
+"signals-horz-2": 0,
+"signals-vert-2": 0,
+"signals-hide-edit-2": false,
+"lc-type": "last-change",
+"lc-is-interval": true,
+"lc-is-moment": false,
+"lc-format": "",
+"lc-position-vert": "top",
+"lc-position-horz": "right",
+"lc-offset-vert": 0,
+"lc-offset-horz": 0,
+"lc-font-size": "12px",
+"lc-font-family": "",
+"lc-font-style": "",
+"lc-bkg-color": "",
+"lc-color": "",
+"lc-border-width": "0",
+"lc-border-style": "",
+"lc-border-color": "",
+"lc-border-radius": 10,
+"lc-zindex": 0,
+"manualSetpoint": "schlueter-fbh.0.77093.Thermostats.1191137.Heating",
+"oid": "schlueter-fbh.0.77093.Thermostats.1191137.ComfortTimeInMinutes"
+},
+"style": {
+"left": "16px",
+"top": "805px"
+},
+"widgetSet": "schlueter-fbh"
+},
+"e00002": {
+"tpl": "tplJquiIconDialog",
+"data": {
+"g_fixed": false,
+"g_visibility": true,
+"g_css_font_text": true,
+"g_css_background": false,
+"g_css_shadow_padding": false,
+"g_css_border": false,
+"g_gestures": false,
+"g_signals": false,
+"g_last_change": false,
+"signals-cond-0": "==",
+"signals-val-0": true,
+"signals-icon-0": "/vis/signals/lowbattery.png",
+"signals-icon-size-0": 0,
+"signals-blink-0": false,
+"signals-horz-0": 0,
+"signals-vert-0": 0,
+"signals-hide-edit-0": false,
+"signals-cond-1": "==",
+"signals-val-1": true,
+"signals-icon-1": "/vis/signals/lowbattery.png",
+"signals-icon-size-1": 0,
+"signals-blink-1": false,
+"signals-horz-1": 0,
+"signals-vert-1": 0,
+"signals-hide-edit-1": false,
+"signals-cond-2": "==",
+"signals-val-2": true,
+"signals-icon-2": "/vis/signals/lowbattery.png",
+"signals-icon-size-2": 0,
+"signals-blink-2": false,
+"signals-horz-2": 0,
+"signals-vert-2": 0,
+"signals-hide-edit-2": false,
+"lc-type": "last-change",
+"lc-is-interval": true,
+"lc-is-moment": false,
+"lc-format": "",
+"lc-position-vert": "top",
+"lc-position-horz": "right",
+"lc-offset-vert": 0,
+"lc-offset-horz": 0,
+"lc-font-size": "12px",
+"lc-font-family": "",
+"lc-font-style": "",
+"lc-bkg-color": "",
+"lc-color": "",
+"lc-border-width": "0",
+"lc-border-style": "",
+"lc-border-color": "",
+"lc-border-radius": 10,
+"lc-zindex": 0,
+"html_dialog": "<style>
+    \n* {
+        \n -webkit-box-sizing: border-box;
+        \n -moz-box-sizing: border-box;
+        \n box-sizing: border-box;
+        \n
+    }
+
+    \n\ninput[type=range][orient=vertical] {
+        \n writing-mode: vertical-lr;
+        \n direction: rtl;
+        \n appearance: slider-vertical;
+        \n width: 16px;
+        \n height: 100px;
+        \n vertical-align: bottom;
+        \n
+    }
+
+    \n\nbody {
+        \n font-family: sans-serif;
+        \n padding: 40px;
+        \n
+    }
+
+    \n
+</style>\n
+<script>\n    var timeSlider = $(\"#diagTimeSlider\"),\n        timeValue = $('#timeValue'),\n        tempSlider = $(\"#diagTempSlider\"),\n        tempValue = $('#tempValue');\n    \n    degree = 0;\n    min = 0;\n    \n    //timeSlider.value = {schlueter-fbh.0.77093.Thermostats.1191137.ComfortTimeInMinutes};\n    //tempSlider.value = {schlueter-fbh.0.77093.Thermostats.1191137.ComfortSetpoint};\n    timeValue.html(timeSlider.attr('value'));\n    tempValue.html(tempSlider.attr('value'));\n    \n    timeSlider.on('input', function(){\n        timeValue.html(this.value);\n        min=this.value;\n    }); \n    tempSlider.on('input', function(){\n        tempValue.html(this.value);\n        degree=this.value;\n    });\n    /*\n    timeSlider.on('mouseup', (function(e){\n        e.preventDefault();\n        e.stopPropagation();\n        writeComfortTime(this.value);\n    }));\n    tempSlider.mouseup(function(e){\n        e.preventDefault();\n        e.stopPropagation();\n        writeComfortTemp(this.value);\n    });\n    \n    timeSlider.bind( \"touchend\", function(e){\n        writeComfortTime(this.value);\n    });\n    tempSlider.bind( \"touchend\", function(e){\n        writeComfortTemp(this.value);\n    });    \n    \n    function writeComfortTime(val){\n        console.log(val);\n        //vis.setValue('schlueter-fbh.0.77093.Thermostats.1191137.ComfortTimeInMinutes', val);\n    }\n    \n    function writeComfortTemp(temp){\n        //vis.setValue('schlueter-fbh.0.77093.Thermostats.1191137.ComfortSetpoint', temp);\n    }    \n    */\n    function closeComfortDialog(){\n\n        /*\n        vis.setValue('schlueter-fbh.0.77093.Thermostats.1191137.ComfortTimeInMinutes', timeValue.html);\n        vis.setValue('schlueter-fbh.0.77093.Thermostats.1191137.ComfortSetpoint', tempValue.html);\n        vis.setValue('schlueter-fbh.0.77093.Thermostats.1191137.setRegulationMode', 2);\n       */\n       //document.querySelector('.ui-dialog-titlebar-close').click();\n       let mode = \"2,\" + min + \",\" + degree;\n       vis.setValue('schlueter-fbh.0.77093.Thermostats.1191137.setRegulationMode', mode);\n    }\n</script>
+\n<table width=\"100%\" style=\"text-align: center;\">\n\t<tr>\n\t <td width=\"50%\">\n\t <span style=\"font-size:
+                small;\">Comfortzeit in Minuten</span>\n\t </td>\n\t <td width=\"50%\">\n\t <span style=\"font-size:
+                small;\">Comforttemperatur</span>\n\t </td>\t \n\t</tr>\n\t<tr>\n\t <td
+            style=\"vertical-align:middle;\">\n\t <span id=\"timeValue\" class=\"range-value\"></span>\n\t </td>\n\t <td
+            style=\"vertical-align:middle;\">\n\t <span id=\"tempValue\" class=\"range-value\"></span>\n\t </td>\n\t
+    </tr>\n\t<tr>\n \t<td>\n <div class=\"range-slider\" width=\"100%\">\n <input id=\"diagTimeSlider\"
+                    class=\"input-range\" orient=\"vertical\" writing-mode=\"vertical-lr\" direction=\"rtl\"
+                    value=\"{schlueter-fbh.0.77093.Thermostats.1191137.ComfortTimeInMinutes}\" type=\"range\" step=\"1\"
+                    min=\"1\" max=\"60\">\n </div>\n \t</td>\n\t\t<td style=\"vertical-align:middle;\">\n <div
+                class=\"range-slider\" width=\"100%\">\n <input id=\"diagTempSlider\" class=\"input-range\"
+                    orient=\"vertical\" writing-mode=\"vertical-lr\" direction=\"rtl\"
+                    value=\"{schlueter-fbh.0.77093.Thermostats.1191137.ComfortSetpoint}\" type=\"range\" step=\"1\"
+                    min=\"5\" max=\"40\">\n </div>\n\t\t</td>\n\t</tr>\n</table>\n<span>&nbsp;</span>\n<table
+    width=\"100%\">\n <tr>\n <td width=\"25%\">\n &nbsp;\n </td>\n \t<td style=\"height: 30px\">\n <div
+                class=\"vis-widget ui-widget ui-button ui-corner-all ui-state-default vis-tpl-jqui-Icon - Dialog\"
+                style=\"width: 110px; height: 30px; cursor: pointer; font-size: small;\"
+                onClick=\"closeComfortDialog()\">\n <div class=\"vis-widget-body\">\n <img style=\"vertical-align:
+                        middle; height: 100%;\" alt=\"\">Start Comfort\n </div>\n </div>\n\t\t
+        <td width=\"25%\">\n &nbsp;\n </td>\n\t
+    </tr>\n</table>",
+"text": "Comfort",
+"modal": true,
+"dialog_width": "300",
+"dialog_height": "320",
+"title": "Comfortmodus?",
+"persistent": true,
+"visibility-cond": "!=",
+"visibility-val": "2",
+"visibility-groups-action": "hide",
+"visibility-oid": "schlueter-fbh.0.77093.Thermostats.1191137.RegulationMode"
+},
+"style": {
+"left": "161px",
+"top": "332px",
+"width": "101px",
+"height": "24px",
+"font-size": "small"
+},
+"widgetSet": "jqui"
+},
+"e00003": {
+"tpl": "tplJquiIconDialog",
+"data": {
+"g_fixed": false,
+"g_visibility": true,
+"g_css_font_text": true,
+"g_css_background": false,
+"g_css_shadow_padding": false,
+"g_css_border": false,
+"g_gestures": false,
+"g_signals": false,
+"g_last_change": false,
+"signals-cond-0": "==",
+"signals-val-0": true,
+"signals-icon-0": "/vis/signals/lowbattery.png",
+"signals-icon-size-0": 0,
+"signals-blink-0": false,
+"signals-horz-0": 0,
+"signals-vert-0": 0,
+"signals-hide-edit-0": false,
+"signals-cond-1": "==",
+"signals-val-1": true,
+"signals-icon-1": "/vis/signals/lowbattery.png",
+"signals-icon-size-1": 0,
+"signals-blink-1": false,
+"signals-horz-1": 0,
+"signals-vert-1": 0,
+"signals-hide-edit-1": false,
+"signals-cond-2": "==",
+"signals-val-2": true,
+"signals-icon-2": "/vis/signals/lowbattery.png",
+"signals-icon-size-2": 0,
+"signals-blink-2": false,
+"signals-horz-2": 0,
+"signals-vert-2": 0,
+"signals-hide-edit-2": false,
+"lc-type": "last-change",
+"lc-is-interval": true,
+"lc-is-moment": false,
+"lc-format": "",
+"lc-position-vert": "top",
+"lc-position-horz": "right",
+"lc-offset-vert": 0,
+"lc-offset-horz": 0,
+"lc-font-size": "12px",
+"lc-font-family": "",
+"lc-font-style": "",
+"lc-bkg-color": "",
+"lc-color": "",
+"lc-border-width": "0",
+"lc-border-style": "",
+"lc-border-color": "",
+"lc-border-radius": 10,
+"lc-zindex": 0,
+"html_dialog": "<style>
+    \n * {
+        \n -webkit-box-sizing: border-box;
+        \n -moz-box-sizing: border-box;
+        \n box-sizing: border-box;
+        \n
+    }
+
+    \n \n input[type=range][orient=vertical] {
+        \n writing-mode: vertical-lr;
+        \n direction: rtl;
+        \n appearance: slider-vertical;
+        \n width: 16px;
+        \n height: 100px;
+        \n vertical-align: bottom;
+        \n
+    }
+
+    \n \n body {
+        \n font-family: sans-serif;
+        \n padding: 40px;
+        \n
+    }
+
+    \n
+</style>\n\n
+<script>\n    const idPrefix = \"schlueter-fbh.0.77093.Thermostats.1191137.\";\n    let minutes = {schlueter-fbh.0.77093.Thermostats.1191137.BoostTimeInMinutes};\n    \n    var timeSlider = $(\"#diagTimeSlider\"),\n        timeValue = $('#timeValue');\n\n    timeSlider.val(minutes);\n    timeValue.html(minutes);\n    \n    timeSlider.on('input', function(){\n        timeValue.html(this.value);\n        min=this.value;\n    }); \n\n    function closeBoostDialog(){\n       let mode = \"8,\" + min + \",\" + 40; //boostMode Degree always 40\n       vis.setValue(idPrefix + 'setRegulationMode', mode);\n    }\n</script>
+\n<table width=\"100%\">\n\t<tr>\n\t <td width=\"50%\">\n\t <span style=\"font-size: small;\">Boostzeit in
+                Minuten</span>\n\t </td>\n\t <td width=\"50%\">\n\t <span style=\"font-size:
+                small;\">Boosttemperatur</span>\n\t </td>\t \n\t</tr>\n\t<tr>\n\t <td style=\"vertical-align:middle;\">
+            \n\t <span id=\"timeValue\" class=\"range-value\"></span>\n\t </td>\n\t <td
+            style=\"vertical-align:middle;\">\n\t <span id=\"tempValue\" class=\"range-value\">40°</span>\n\t </td>\n\t
+    </tr>\n\t<tr>\n \t<td>\n <div class=\"range-slider\" width=\"100%\">\n <input id=\"diagTimeSlider\"
+                    class=\"input-range\" orient=\"vertical\" writing-mode=\"vertical-lr\" direction=\"rtl\" value=\"0\"
+                    type=\"range\" step=\"1\" min=\"1\" max=\"60\">\n </div>\n \t</td>\n\t\t<td
+            style=\"vertical-align:middle;font-size:0.75em;\">\n (Temperatur nicht änderbar/\n temperature not
+            changeable)\n\t\t</td>\n\t</tr>\n</table>\n<span>&nbsp;</span>\n<table width=\"100%\" style=\"text-align:
+    center;\">\n <tr>\n <td width=\"25%\">\n &nbsp;\n </td>\n \t<td style=\"height: 30px\">\n <div class=\"vis-widget
+                ui-widget ui-button ui-corner-all ui-state-default vis-tpl-jqui-Icon - Dialog\" style=\"width: 110px;
+                height: 30px; cursor: pointer; font-size: small;\" onClick=\"closeBoostDialog()\">\n <div
+                    class=\"vis-widget-body\">\n <img style=\"vertical-align: middle; height: 100%;\" alt=\"\">Start
+                    Boost\n </div>\n </div>\n\t\t
+        <td width=\"25%\">\n &nbsp;\n </td>\n\t
+    </tr>\n</table>",
+"text": "Boost",
+"modal": true,
+"dialog_width": "300",
+"dialog_height": "320",
+"title": "Boostmodus?",
+"persistent": true,
+"visibility-cond": "!=",
+"visibility-val": "8",
+"visibility-groups-action": "hide",
+"visibility-oid": "schlueter-fbh.0.77093.Thermostats.1191137.RegulationMode"
+},
+"style": {
+"left": "269px",
+"top": "332px",
+"width": "101px",
+"height": "24px",
+"font-size": "small"
+},
+"widgetSet": "jqui"
+},
+"e00004": {
+"tpl": "tplVis-materialdesign-Card",
+"data": {
+"g_fixed": false,
+"g_visibility": false,
+"g_css_font_text": false,
+"g_css_background": false,
+"g_css_shadow_padding": false,
+"g_css_border": false,
+"g_gestures": false,
+"g_signals": false,
+"g_last_change": false,
+"visibility-cond": "==",
+"visibility-val": 1,
+"visibility-groups-action": "hide",
+"listItemDataMethod": "inputPerEditor",
+"cardLayout": "Basic",
+"cardStyle": "default",
+"showScrollbar": "true",
+"showTitle": "true",
+"titleLayout": "#mdwTheme:vis-materialdesign.0.fontSizes.card.title",
+"titleFontFamily": "#mdwTheme:vis-materialdesign.0.fonts.card.title",
+"showSubTitle": "true",
+"subtitleLayout": "#mdwTheme:vis-materialdesign.0.fontSizes.card.subTitle",
+"subTitleFontFamily": "#mdwTheme:vis-materialdesign.0.fonts.card.subTitle",
+"showText": "true",
+"textFontSize": "#mdwTheme:vis-materialdesign.0.fontSizes.card.text",
+"textFontFamily": "#mdwTheme:vis-materialdesign.0.fonts.card.text",
+"refresh_oid_delay": "100",
+"refresh_animation_duration": "150",
+"colorBackground": "#mdwTheme:vis-materialdesign.0.colors.card.background",
+"colorTitleSectionBackground": "#mdwTheme:vis-materialdesign.0.colors.card.background_title",
+"colorTextSectionBackground": "#mdwTheme:vis-materialdesign.0.colors.card.background_body",
+"colorTitle": "#mdwTheme:vis-materialdesign.0.colors.card.title",
+"colorSubtitle": "#mdwTheme:vis-materialdesign.0.colors.card.subTitle",
+"colorBody": "#mdwTheme:vis-materialdesign.0.colors.card.text",
+"clickType": "none",
+"controlType": "link",
+"signals-cond-0": "==",
+"signals-val-0": true,
+"signals-icon-0": "/vis/signals/lowbattery.png",
+"signals-icon-size-0": 0,
+"signals-blink-0": false,
+"signals-horz-0": 0,
+"signals-vert-0": 0,
+"signals-hide-edit-0": false,
+"signals-cond-1": "==",
+"signals-val-1": true,
+"signals-icon-1": "/vis/signals/lowbattery.png",
+"signals-icon-size-1": 0,
+"signals-blink-1": false,
+"signals-horz-1": 0,
+"signals-vert-1": 0,
+"signals-hide-edit-1": false,
+"signals-cond-2": "==",
+"signals-val-2": true,
+"signals-icon-2": "/vis/signals/lowbattery.png",
+"signals-icon-size-2": 0,
+"signals-blink-2": false,
+"signals-horz-2": 0,
+"signals-vert-2": 0,
+"signals-hide-edit-2": false,
+"lc-type": "last-change",
+"lc-is-interval": true,
+"lc-is-moment": false,
+"lc-format": "",
+"lc-position-vert": "top",
+"lc-position-horz": "right",
+"lc-offset-vert": 0,
+"lc-offset-horz": 0,
+"lc-font-size": "12px",
+"lc-font-family": "",
+"lc-font-style": "",
+"lc-bkg-color": "",
+"lc-color": "",
+"lc-border-width": "0",
+"lc-border-style": "",
+"lc-border-color": "",
+"lc-border-radius": 10,
+"lc-zindex": 0,
+"html": "<style>
+    \n .thermNameLabel {
+        \n font-size: 1.1em;
+        \n color: #4b2561;
+        \n
+    }
+
+    \n\n .thermNameText {
+        \n font-size: 1.1em;
+        \n color: #4b2561;
+        \n
+    }
+
+    \n\n .RegulationMode {
+        \n font-size: 1.1em;
+        \n color: #4b2561;
+        \n
+    }
+
+    \n \n .Heating {
+        \n width: 30%;
+        \n
+    }
+
+    \n
+</style>\n
+<script>\n    const idPrefixGroup = 'schlueter-fbh.0.77093.'; \n    const idPrefixTherm = idPrefixGroup + 'Thermostats.1191137.'; \n    let thermValues = { \n        \"GroupName\": 'GroupName',\n        \"ThermostatName\": 'ThermostatName',\n        \"RoomTemperature\": 0,\n        \"FloorTemperature\": 0,            \n        \"RegulationMode\": -1,\n        \"ManualModeSetpoint\": 0,\n        \"ComfortTimeInMinutes\": 0,\n        \"ComfortEndTime\": 'ComfortEndTime',\n        \"ComfortSetpoint\": 0,\n        \"BoostTimeInMinutes\": 0,\n        \"BoostEndTime\": 'BoostEndTime',\n        \"Heating\": false\n    };\n    \n    let objIDs = [];\n    const orderedKeys = [];\n\n    let currentMode = -1;\n    \n    Object.keys(thermValues).forEach((key, index) => {\n        if(index === 0){\n            objIDs.push(idPrefixGroup + key);\n        } else {\n            objIDs.push(idPrefixTherm + key);\n        } \n        orderedKeys.push(key);\n    });\n\n    servConn.getStates(objIDs, (error, states) => {\n        for(var i=0; i < objIDs.length; i++){\n            console.log(i + ' - ' + objIDs[i] + ' - ' + states[objIDs[i]].val);\n            if(orderedKeys[i] == 'RegulationMode'){\n                currentMode = states[objIDs[i]].val;\n                thermValues[orderedKeys[i]] = modeEnum(states[objIDs[i]].val);\n            } else if(orderedKeys[i] == 'RoomTemperature' ||orderedKeys[i] == 'FloorTemperature' || orderedKeys[i] == 'ComfortSetpoint' || orderedKeys[i] == 'ManualModeSetpoint'){\n                thermValues[orderedKeys[i]] = states[objIDs[i]].val + '°';\n            } else if(orderedKeys[i] == 'ComfortEndTime' || orderedKeys[i] == 'BoostEndTime'){\n                thermValues[orderedKeys[i]] = endTimeValue(orderedKeys[i], states[objIDs[i]].val);\n            } else {\n                thermValues[orderedKeys[i]] = states[objIDs[i]].val\n            }\n        }\n        setValues(thermValues);\n    });\n\n    function endTimeValue(type, val){\n        if(currentMode == \"2\" && type == \"ComfortEndTime\"){\n            return val.slice(11);\n        } else if(currentMode == \"8\" && type == \"BoostEndTime\"){\n            return val.slice(11);\n        } else {\n            return '';\n        }\n    }\n\n    function modeEnum(mode){\n        let res = 'undefined';\n        switch(mode){\n            case 1:\n                res = 'Zeitplan';\n                break;\n            case 2:\n                res = 'Comfort';\n                break;\n            case 3:\n                res = 'Manuell';\n                break;\n            case 8:\n                res = 'Boost';\n                break;\n            case 9:\n                res = 'Eco';\n                break;\n        }\n        return res;\n    }\n    \n    function setValues(obj){\n        Object.keys(obj).forEach(key => {\n           $(\".\" + key).html(obj[key]); \n        });\n    }\n</script>
+\n<table width=\"100%\">\n <tr>\n <td class=\"thermNameLabel\">Gruppe/Raum:</td>\n <td class=\"thermNameText
+            GroupName\"></td>\n <td rowspan=\"4\" class=\"Heating\"></td>\n </tr>\n <tr>\n <td class=\"thermNameLabel\">
+            Tehrmost.:</td>\n <td class=\"thermNameText ThermostatName\"></td>\n </tr>\n <tr>\n <td colspan=\"2\">&nbsp;
+        </td>\n </tr>\n <tr>\n <td class=\"thermNameLabel\">akt. Modus:</td>\n <td class=\"RegulationMode\"></td>\n
+    </tr> \n</table>\n<p></p>\n<table width=\"100%\">\n <tr>\n <td class=\"txtLabel\">Raum-Temp.:</td>\n <td
+            class=\"txtText RoomTemperature\"></td>\n <td class=\"tdEmpty\">&nbsp;</td>\n <td class=\"txtLabel\">
+            Boden-Temp.:</td>\n <td class=\"txtText FloorTemperature\"></td>\n </tr>\n <tr>\n <td class=\"txtLabel\">
+            Manuell-Temp.:</td>\n <td class=\"txtText ManualModeSetpoint\"></td>\n <td class=\"tdEmpty\">&nbsp;</td>\n
+        <td class=\"txtLabel\">Comfort-Temp.:</td>\n <td class=\"txtText ComfortSetpoint\"></td>\n
+    </tr>\n <tr>\n <td colspan=\"5\">&nbsp;</td>\n </tr>\n <tr>\n <td class=\"txtLabel\">Boost-Zeit (m):</td>\n <td
+            class=\"txtText BoostTimeInMinutes\"></td>\n <td class=\"tdEmpty\">&nbsp;</td>\n <td class=\"txtLabel\">
+            Endet:</td>\n <td class=\"txtText BoostEndTime\"></td>\n </tr>\n <tr>\n <td class=\"txtLabel\">Comfort-Zeit
+            (m):</td>\n <td class=\"txtText ComfortTimeInMinutes\"></td>\n <td class=\"tdEmpty\">&nbsp;</td>\n <td
+            class=\"txtLabel\">
+            Endet:</td>\n <td class=\"txtText ComfortEndTime\"></td>\n </tr> \n</table>"
+},
+"style": {
+"left": "3px",
+"top": "11px",
+"width": "382px",
+"height": "312px"
+},
+"widgetSet": "materialdesign"
+},
+"e00005": {
+"tpl": "tplJquiIconDialog",
+"data": {
+"g_fixed": false,
+"g_visibility": true,
+"g_css_font_text": true,
+"g_css_background": false,
+"g_css_shadow_padding": false,
+"g_css_border": false,
+"g_gestures": false,
+"g_signals": false,
+"g_last_change": false,
+"signals-cond-0": "==",
+"signals-val-0": true,
+"signals-icon-0": "/vis/signals/lowbattery.png",
+"signals-icon-size-0": 0,
+"signals-blink-0": false,
+"signals-horz-0": 0,
+"signals-vert-0": 0,
+"signals-hide-edit-0": false,
+"signals-cond-1": "==",
+"signals-val-1": true,
+"signals-icon-1": "/vis/signals/lowbattery.png",
+"signals-icon-size-1": 0,
+"signals-blink-1": false,
+"signals-horz-1": 0,
+"signals-vert-1": 0,
+"signals-hide-edit-1": false,
+"signals-cond-2": "==",
+"signals-val-2": true,
+"signals-icon-2": "/vis/signals/lowbattery.png",
+"signals-icon-size-2": 0,
+"signals-blink-2": false,
+"signals-horz-2": 0,
+"signals-vert-2": 0,
+"signals-hide-edit-2": false,
+"lc-type": "last-change",
+"lc-is-interval": true,
+"lc-is-moment": false,
+"lc-format": "",
+"lc-position-vert": "top",
+"lc-position-horz": "right",
+"lc-offset-vert": 0,
+"lc-offset-horz": 0,
+"lc-font-size": "12px",
+"lc-font-family": "",
+"lc-font-style": "",
+"lc-bkg-color": "",
+"lc-color": "",
+"lc-border-width": "0",
+"lc-border-style": "",
+"lc-border-color": "",
+"lc-border-radius": 10,
+"lc-zindex": 0,
+"html_dialog": "<style>
+    \n * {
+        \n -webkit-box-sizing: border-box;
+        \n -moz-box-sizing: border-box;
+        \n box-sizing: border-box;
+        \n
+    }
+
+    \n \n input[type=range][orient=vertical] {
+        \n writing-mode: vertical-lr;
+        \n direction: rtl;
+        \n appearance: slider-vertical;
+        \n width: 16px;
+        \n height: 100px;
+        \n vertical-align: bottom;
+        \n
+    }
+
+    \n \n body {
+        \n font-family: sans-serif;
+        \n padding: 40px;
+        \n
+    }
+
+    \n
+</style>\n\n
+<script>\n    const idPrefix = \"schlueter-fbh.0.77093.Thermostats.1191137.\";\n    let temp = {schlueter-fbh.0.77093.Thermostats.1191137.ManualModeSetpoint};\n    \n    if(temp=0){\n        temp = 19;\n    }\n    \n    var tempSlider = $(\"#diagTempSlider\"),\n        tempValue = $('#tempValue');\n\n    tempSlider.val(temp);\n    tempValue.html(temp);\n    \n    tempSlider.on('input', function(){\n        tempValue.html(this.value);\n        temp=this.value;\n    }); \n\n    function closeManualDialog(){\n       vis.setValue(idPrefix + 'ManualModeSetpoint', temp);\n    }\n</script>
+\n<table width=\"100%\" style=\"text-align: center;\">\n\t<tr>\n\t <td>\n\t <span style=\"font-size: small;\">gewünschte
+                Temperatur</span>\n\t </td>\n\t</tr>\n\t<tr>\n\t <td style=\"vertical-align:middle;\">\n\t <span
+                id=\"tempValue\" class=\"range-value\"></span>\n\t </td>\n\t</tr>\n\t<tr>\n \t<td>\n <div
+                class=\"range-slider\" width=\"100%\">\n <input id=\"diagTempSlider\" class=\"input-range\"
+                    orient=\"vertical\" writing-mode=\"vertical-lr\" direction=\"rtl\" value=\"0\" type=\"range\"
+                    step=\"0.5\" min=\"5\" max=\"40\">\n </div>\n \t</td>\n\t</tr>\n</table>\n<span>&nbsp;</span>\n
+<table width=\"100%\" style=\"text-align: center;\">\n <tr>\n <td width=\"25%\">\n &nbsp;\n </td>\n \t<td
+            style=\"height: 30px\">\n <div class=\"vis-widget ui-widget ui-button ui-corner-all ui-state-default
+                vis-tpl-jqui-Icon - Dialog\" style=\"width: 110px; height: 30px; cursor: pointer; font-size: small;\"
+                onClick=\"closeManualDialog()\">\n <div class=\"vis-widget-body\">\n <img style=\"vertical-align:
+                        middle; height: 100%;\" alt=\"\">Manuell\n </div>\n </div>\n\t\t
+        <td width=\"25%\">\n &nbsp;\n </td>\n\t
+    </tr>\n</table>",
+"text": "Manuell",
+"modal": true,
+"dialog_width": "300",
+"dialog_height": "320",
+"title": "manueller Modus?",
+"persistent": true,
+"visibility-cond": "!=",
+"visibility-val": "3",
+"visibility-groups-action": "hide",
+"visibility-oid": "schlueter-fbh.0.77093.Thermostats.1191137.RegulationMode"
+},
+"style": {
+"left": "8px",
+"top": "331px",
+"width": "101px",
+"height": "24px",
+"font-size": "small"
+},
+"widgetSet": "jqui"
+}
+},
+"name": "TestView",
+"filterList": []
+}
