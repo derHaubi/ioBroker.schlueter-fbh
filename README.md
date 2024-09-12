@@ -130,10 +130,8 @@ As the Adapter is Beta, this is also for that View. I use in in my Production bu
 
 
 ## Changelog
-<!--
-	Placeholder for the next version (at the beginning of the line):
-	### **WORK IN PROGRESS**
--->
+### 0.3.0
+* Initial Release
 
 ### **WORK IN PROGRESS**
 * (derHaubi) initial release
@@ -141,7 +139,7 @@ As the Adapter is Beta, this is also for that View. I use in in my Production bu
 ## License
 MIT License
 
-Copyright (c) 2024 derHaubi <h3@css-haupt.de>
+Copyright (c) 2024 derHaubi <haubi@css-haupt.de>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

@@ -228,6 +228,7 @@ class SchlueterFbh extends utils.Adapter {
 			// Clear all ScheduledJobs, Timers and Intevarls
 			schedule.clearSchedule(this.schedEnergy);
 			clearInterval(this.timerGroup);
+			clearTimeout(this.UpdateTimeout);
 			this.log.debug("Adapter unloaded");
 
 			callback();
@@ -511,7 +512,7 @@ class SchlueterFbh extends utils.Adapter {
 		const res = await this.postJSONData(this.groupUpdatePath, { sessionId: this.token }, postJSON);
 		this.log.debug("POST: " + JSON.stringify(res));
 		this.updateGroupData();
-		this.setTimeout(function () {
+		this.UpdateTimeout = this.setTimeout(function () {
 			me.updateGroupData();
 		}, me.config.afterPostRecallTimout * 1000);
 
