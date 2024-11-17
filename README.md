@@ -26,7 +26,7 @@ You can check other adapters for examples or ask in the developer community. Usi
 
 ### Install Adapter
 
-At this Point in Time the Adapter is classified as beta-beta-beta :) I hav it running on my productove Instance but I cannot guarantee that everything will work properly and I accept no liability for any damage or failures.
+At this Point in Time the Adapter is classified as beta :) I hav it running on my productive Instance but I cannot guarantee that everything will work properly and I accept no liability for any damage or failures.
 
 1. On Adapter-Section in ioBroker get into Expert Mode
 1. now the adapter can be installed by giving the follwing GIT-Hub Address as Custom-Url
@@ -110,15 +110,15 @@ That means:
 * I do not know when exaclty the Thermostat delivers the Data. For me it is always round abaout 5 Minutes after full hour (so: 15.06, 16.06, 17.06, etc.)
 * Therefore we have the Admin-Parameter to tell when this hourly Job should run ("Scheduled Job")
 
-The other Energy Calls whoch could be done will be described in future.
+The other Energy Calls which could be done will be described in future.
 
 
 ## Visualization (at least some sort of)
-The File "testView.html" hold a VIS-View which is making use of the Adapters delivered Data and some steering/controlling things concering changeing the Modes.
+The File "testView.html" hold a VIS-View which is making use of the Adapters delivered Data and some steering/controlling things concering changing the Modes.
 You can Import the View, but then within the HTML-Sections you ned to give the correct IDs for your Group/Thermostat.
 As the Adapter is Beta, this is also for that View. I use in in my Production but again no guarantee.
 
-**Attention: A Requirement for this vie is that Adapter "Material Design Widgets" (by Scrounger) is installed for VIS.** 
+**Attention: A Requirement for this view is that Adapter "Material Design Widgets" (by Scrounger) is installed for VIS.** 
 ![schlueter_vis_test_view](https://github.com/user-attachments/assets/e8a68b42-8b7b-406d-8705-a8bd91f67d78)
 
 ## To be done
@@ -130,6 +130,11 @@ As the Adapter is Beta, this is also for that View. I use in in my Production bu
 
 
 ## Changelog
+### 0.3.5
+* Changed State Type GroupId and Thermostats.xxxxxx.Id to Number. Was string and constantly having info in Log has to be type "string" but received type "number"
+* Added States for Schedule - currently only for Viewing, not setting
+* enhanced View-Set  for steering, checking Schedule and checking Energy Data (Tabular Views). It is still build as VIS-Views and not as Widget-Set within the Adapter
+
 ### 0.3.0
 * Initial Release
 

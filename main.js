@@ -200,8 +200,12 @@ class SchlueterFbh extends utils.Adapter {
 
 		//generate Date for the Query - to get current day we need to query next day. 
 		//Time is not relevant and set to 12.00am
+		//We get theh hourly kw/h for two days to calculate a sum for today and yesterday
+		//today is written into energyToday an between 00.00 and 02.00 we write the yesterdays
+		//value into energyYesterday. This is needed because it take up to 90 Minutes (current assumption)
+		//until the Energy is sent to Server by the Thermostat
 		const queryDate = DateTime.now().setZone(this.serverTimeZone).plus({ days: 1 }).toFormat("yyyy-MM-dd'T12:00:00'");
-
+		this.log.debug("Scheduled Job Query-Date: " + queryDate);
 		for (let i = 0; i < obj.length; i++) {
 			for (let y = 0; y < obj[i].Thermostats.length; y++) {
 				const varQueryParam = {
@@ -293,7 +297,7 @@ class SchlueterFbh extends utils.Adapter {
 							} else if (arrRM[0] == "9") { //Eco
 								// to be done
 							} else if (arrRM[0] == "1") { //Schedule
-								// to be done
+								this.postToThermostat(curGroup, curThermID, "schedule");
 							};
 
 							this.setStateAsync(id, { val: -1, ack: true }); //set controllState back to -1
@@ -355,7 +359,7 @@ class SchlueterFbh extends utils.Adapter {
 
 
 		const engQuery = Object.assign({}, staticQueryParam, varQueryParam);
-		this.log.debug(JSON.stringify(engQuery, null, 2));
+		this.log.debug('Energy Query: ' + JSON.stringify(engQuery, null, 2));
 
 		let res = await this.postJSONData(this.energyPath, { sessionId: this.token }, engQuery);
 
@@ -367,11 +371,15 @@ class SchlueterFbh extends utils.Adapter {
 			res = this.enrichEnergyCallResult(queryType, res, engQuery.DateTime); //create JSON-Data to display in JSON-Table-Widget
 			this.setStateAsync(stateIdPath + ".energyLastCallResult", { val: JSON.stringify(res, null, 2), ack: true });
 		}
+		this.setStateAsync(stateIdPath + ".energyLastCallQuery", { val: JSON.stringify(engQuery, null, 2), ack: true });
 	}
 
 	writeScheduleJobEnergyResult(data, stateIdPath) {
 		try {
+			this.log.debug('ScheduleJob Data: ' + JSON.stringify(data, null, 2));
 			const values = this.calculateSumForUsage(data);
+
+			this.log.debug('ScheduleJob Calculeted UsageBlocks: ' + JSON.stringify(values, null, 2));
 			this.setStateAsync(stateIdPath + ".energyToday", { val: values[0], ack: true });
 
 			//between 0.00am and 2.01am we write Data for Yesterday again
@@ -380,6 +388,7 @@ class SchlueterFbh extends utils.Adapter {
 			const startTime = { hours: 0, minutes: 0 };
 			const endTime = { hours: 2, minutes: 1 };
 			if (this.isInTimeFrame(startTime, endTime)) {
+				this.log.debug('ScheduleJob We are in Write Last Day Timeframe');
 				this.setStateAsync(stateIdPath + ".energyYesterday", { val: values[1], ack: true });
 			}
 
@@ -480,6 +489,13 @@ class SchlueterFbh extends utils.Adapter {
 		return res;
 	}
 
+	scheduleRawToJSON(raw) {
+		var res = {};
+
+
+		this.setStateAsync(obj.GroupId + ".scheduleJSON", { val: JSON.stringify(res, null, 2), ack: true });
+	}
+
 
 
 	async postToThermostat(groupID, thermoID, postType, arrRM = []) {
@@ -507,6 +523,8 @@ class SchlueterFbh extends utils.Adapter {
 		} else if (postType == "boost") {
 			postJSON.SetGroup.BoostEndTime = this.createEndDateString("minutes", +arrRM[1] || 30); //this.createEndDateString("minutes", BoostMinutes.val || 30);
 			postJSON.SetGroup.RegulationMode = 8;
+		} else if (postType == "schedule") {
+			postJSON.SetGroup.RegulationMode = 1;
 		}
 
 		const res = await this.postJSONData(this.groupUpdatePath, { sessionId: this.token }, postJSON);
@@ -562,11 +580,12 @@ class SchlueterFbh extends utils.Adapter {
 	}
 
 	async createUpdateGroups(obj) {
+		/*
 		const GroupStates = [
 			"GroupId",
 			"GroupName"
 		];
-
+		*/
 		/*
 		const ThermostatStates = [
 			"Id",
@@ -582,12 +601,22 @@ class SchlueterFbh extends utils.Adapter {
 		];
 		*/
 
+		//Create Group and Group-States
 		await this.createState(obj.GroupId.toString(), "", "group", "group", "indicator", true, false);
+		await this.createState(obj.GroupId + ".GroupId", 'GroupId', "state", "number", "indicator", true, false);
+		await this.createState(obj.GroupId + ".GroupName", 'GroupName', "state", "string", "indicator", true, false);
 
+		//States for Schedule Plans - also Group States
+		await this.createState(obj.GroupId + "." + "scheduleRAW", "scheduleRAW", "state", "string", "string", true, true, false);
+		await this.createState(obj.GroupId + "." + "scheduleJSON", "scheduleJSON", "state", "string", "string", true, true, false);
+
+		/*
 		for (let i = 0; i < GroupStates.length; i++) {
 			await this.createState(obj.GroupId + "." + GroupStates[i], GroupStates[i], "state", "string", "indicator", true, false);
 		}
+		*/
 
+		//Create Thermostat-States
 		const thermo = obj.Thermostats;
 		for (let j = 0; j < thermo.length; j++) {
 			const idPrefix = obj.GroupId + "." + "Thermostats." + thermo[j].SerialNumber;
@@ -596,7 +625,7 @@ class SchlueterFbh extends utils.Adapter {
 
 			//Create States if needed/not existing
 			await this.createState(idPrefix, curTherm.ThermostatName, "device", "device", "indicator", true, false, false);
-			await this.createState(idPrefix + "." + "Id", "ID", "state", "string", "indicator", true, false, false);
+			await this.createState(idPrefix + "." + "Id", "ID", "state", "number", "indicator", true, false, false);
 			usedStates.push(idPrefix + "." + "Id");
 			await this.createState(idPrefix + "." + "SerialNumber", "SerialNumber", "state", "string", "indicator", true, false, false);
 			usedStates.push(idPrefix + "." + "SerialNumber");
@@ -636,18 +665,23 @@ class SchlueterFbh extends utils.Adapter {
 			await this.createState(idPrefix + "." + "startBoost", "startBoost", "state", "boolean", "boolean", true, true, true, false);
 
 			//additonal State for Energy Measurement
-			await this.createState(idPrefix + "." + "energyDaily", "energyDaily", "state", "string", "string", true, false, false);
 			await this.createState(idPrefix + "." + "energyLastCallResult", "energyLastCallResult", "state", "string", "string", true, false, false);
 			await this.createState(idPrefix + "." + "energyLastCallResultRAW", "energyLastCallResultRaw", "state", "string", "string", true, false, false);
 			await this.createState(idPrefix + "." + "energyLastCallQuery", "energyLastCallQuery", "state", "string", "string", true, true, true);
 			await this.createState(idPrefix + "." + "energyToday", "energyToday", "state", "number", "number", true, false, false);
 			await this.createState(idPrefix + "." + "energyYesterday", "energyYesterday", "state", "number", "number", true, false, false);
 
-
 			//Set GroupStates
+			this.setStateAsync(obj.GroupId + ".GroupId", { val: curTherm['GroupId'], ack: true });
+			this.setStateAsync(obj.GroupId + ".GroupName", { val: curTherm['GroupName'], ack: true });
+			this.setStateAsync(obj.GroupId + ".scheduleRAW", { val: JSON.stringify(obj.Schedule, null, 2), ack: true });
+			//this.scheduleRawToJSON(obj.Schedule);
+			/*
+			/*
 			for (let y = 0; y < usedStates.length; y++) {
 				this.setStateAsync(obj.GroupId + "." + GroupStates[y], { val: curTherm[GroupStates[y]], ack: true });
 			}
+			*/
 
 			//Set Thermostat-Specific States
 			for (let z = 0; z < usedStates.length; z++) {
