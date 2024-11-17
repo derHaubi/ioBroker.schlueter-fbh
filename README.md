@@ -114,19 +114,24 @@ The other Energy Calls which could be done will be described in future.
 
 
 ## Visualization (at least some sort of)
-The File "testView.html" hold a VIS-View which is making use of the Adapters delivered Data and some steering/controlling things concering changing the Modes.
-You can Import the View, but then within the HTML-Sections you ned to give the correct IDs for your Group/Thermostat.
+In Folder zzViews there are three VIS-Views hold making use of the Adapters delivered Data and some steering/controlling things.
+* bad = Main View
+* badFBHEnergy = View holding Energy Table and Possibility to Queury the Energy Data
+* badFBHSchedule = View to show the current Schedule set in the Thermostat
+* globa_script_fragmenst.js = holding two variable are used in all views. With hat putting into the Scripts Tab in VIS you only need to tell tehe Views at one Place how to get the correct States
+
+The Idea is taht view bad is used to be shown. the other Views are opened as Modals over View bad.
+
 As the Adapter is Beta, this is also for that View. I use in in my Production but again no guarantee.
 
 **Attention: A Requirement for this view is that Adapter "Material Design Widgets" (by Scrounger) is installed for VIS.** 
-![schlueter_vis_test_view](https://github.com/user-attachments/assets/e8a68b42-8b7b-406d-8705-a8bd91f67d78)
+
 
 ## To be done
-* Visualize the Schedule Data of a Thermostat in a proper way and have possibility to change it via VIS
-* Visualize the Energy Call Part in Proper Way
+* Possibility to change Schedule Data via VIS
 * Have a nice looking Widget-Set (maybe Thermostat-Based in the Adapter) - Iam to dump to this
 * Long Time Tests
-* Testing with more than one Grou and/or more than one Thermostat (not possible for me cause I only own one)
+* Testing with more than one Group and/or more than one Thermostat (not possible for me cause I only own one)
 
 
 ## Changelog
