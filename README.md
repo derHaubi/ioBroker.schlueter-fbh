@@ -118,7 +118,7 @@ In Folder zzViews there are three VIS-Views hold making use of the Adapters deli
 * bad = Main View
 * badFBHEnergy = View holding Energy Table and Possibility to Queury the Energy Data
 * badFBHSchedule = View to show the current Schedule set in the Thermostat
-* globa_script_fragmenst.js = holding two variable are used in all views. With hat putting into the Scripts Tab in VIS you only need to tell tehe Views at one Place how to get the correct States
+* globa_script_fragmenst.js = holding two variable are used in all views. With hat putting into the Scripts Tab in VIS you only need to tell tehe Views at one Place how to get the correct Statesb (except the tables in views ...Energy and ...Schedule, those need to be set to the corresponding State by yourself in the widgets)
 
 The Idea is taht view bad is used to be shown. the other Views are opened as Modals over View bad.
 
